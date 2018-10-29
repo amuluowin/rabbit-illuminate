@@ -1,0 +1,22 @@
+{
+  "name": "rabbit/illuminate",
+  "description": "rabbit illuminate",
+  "type": "library",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "albert",
+      "email": "63851587@qq.com"
+    }
+  ],
+  "require": {
+    "rabbit/framework": "dev-master",
+    "rabbit/pool": "dev-master",
+    "illuminate/database": "^5.7"
+  },
+  "autoload": {
+    "psr-4": {
+      "rabbit\\illuminate\\": "src/"
+    }
+  }
+}
