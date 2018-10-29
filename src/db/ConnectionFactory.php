@@ -9,10 +9,6 @@
 namespace rabbit\illuminate\db;
 
 use Illuminate\Database\Connection;
-use Illuminate\Database\PostgresConnection;
-use Illuminate\Database\SQLiteConnection;
-use Illuminate\Database\SqlServerConnection;
-use rabbit\illuminate\db\pool\PdoPool;
 use rabbit\pool\PoolInterface;
 
 /**
@@ -42,22 +38,12 @@ class ConnectionFactory extends \Illuminate\Database\Connectors\ConnectionFactor
             return $resolver($connection, $database, $prefix, $config);
         }
 
-        if (isset($this->pool[$database])) {
+        if (!isset($this->pool[$database])) {
             $this->pool[$database] = $config['pool'];
             unset($config['pool']);
+            $this->pool[$database]->getPoolConfig()->setUri([$driver, $connection, $database, $prefix, $config]);
         }
 
-        switch ($driver) {
-            case 'mysql':
-                return $this->pool[$database]->getConnection();
-            case 'pgsql':
-                return new PostgresConnection($connection, $database, $prefix, $config);
-            case 'sqlite':
-                return new SQLiteConnection($connection, $database, $prefix, $config);
-            case 'sqlsrv':
-                return new SqlServerConnection($connection, $database, $prefix, $config);
-        }
-
-        throw new \InvalidArgumentException("Unsupported driver [{$driver}]");
+        return $this->pool[$database]->getConnection();
     }
 }

@@ -7,6 +7,8 @@
  */
 
 namespace rabbit\illuminate\db;
+use rabbit\exception\NotSupportedException;
+use rabbit\pool\PoolInterface;
 
 /**
  * Trait ConnectionTrait

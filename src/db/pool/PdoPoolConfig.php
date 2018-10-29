@@ -17,5 +17,11 @@ use rabbit\pool\PoolProperties;
  */
 class PdoPoolConfig extends PoolProperties
 {
-
+    /**
+     * @param array $config
+     */
+    public function setUri(array $config)
+    {
+        $this->uri = $config;
+    }
 }

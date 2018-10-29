@@ -3,21 +3,22 @@
  * Created by PhpStorm.
  * User: Administrator
  * Date: 2018/10/29
- * Time: 9:59
+ * Time: 13:42
  */
 
 namespace rabbit\illuminate\db;
 
+
 use rabbit\exception\NotSupportedException;
-use rabbit\illuminate\db\Processors\MySqlProcessor;
+use rabbit\illuminate\db\Processors\SqlServerProcessor;
 use rabbit\pool\ConnectionInterface;
 use rabbit\pool\PoolInterface;
 
 /**
- * Class MySqlConnection
+ * Class SqlServerConnection
  * @package rabbit\illuminate\db
  */
-class MySqlConnection extends \Illuminate\Database\MySqlConnection implements ConnectionInterface
+class SqlServerConnection extends \Illuminate\Database\SqlServerConnection implements ConnectionInterface
 {
     use ConnectionTrait;
 

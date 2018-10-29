@@ -10,6 +10,9 @@ namespace rabbit\illuminate\db\pool;
 
 
 use rabbit\illuminate\db\MySqlConnection;
+use rabbit\illuminate\db\PostgresConnection;
+use rabbit\illuminate\db\SQLiteConnection;
+use rabbit\illuminate\db\SqlServerConnection;
 use rabbit\pool\ConnectionInterface;
 use rabbit\pool\ConnectionPool;
 
@@ -19,10 +22,21 @@ use rabbit\pool\ConnectionPool;
  */
 class PdoPool extends ConnectionPool
 {
-    public function createConnection(array $config = []): ConnectionInterface
+    public function createConnection(): ConnectionInterface
     {
-        list($connection, $database, $prefix, $config) = $config;
-        return new MySqlConnection($this, $connection, $database, $prefix, $config);
+        list($driver, $pdo, $database, $prefix, $config) = $this->poolConfig->getUri();
+        switch ($driver) {
+            case 'mysql':
+                return new MySqlConnection($this);
+            case 'pgsql':
+                return new PostgresConnection($this);
+            case 'sqlite':
+                return new SQLiteConnection($this);
+            case 'sqlsrv':
+                return new SqlServerConnection($this);
+        }
+        throw new \InvalidArgumentException("Unsupported driver [{$driver}]");
+
     }
 
 }

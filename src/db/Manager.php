@@ -7,8 +7,7 @@
  */
 
 namespace rabbit\illuminate\db;
-
-use Illuminate\Database\DatabaseManager;
+use Illuminate\Container\Container;
 
 /**
  * Class Manager
@@ -16,6 +15,21 @@ use Illuminate\Database\DatabaseManager;
  */
 class Manager extends \Illuminate\Database\Capsule\Manager
 {
+    /**
+     * Create a new database capsule manager.
+     *
+     * @param  \Illuminate\Container\Container|null $container
+     * @return void
+     */
+    public function __construct(Container $container = null)
+    {
+        parent::__construct($container);
+
+        $this->setAsGlobal();
+
+        $this->bootEloquent();
+    }
+
     /**
      * Build the database manager instance.
      *
@@ -26,5 +40,13 @@ class Manager extends \Illuminate\Database\Capsule\Manager
         $factory = new ConnectionFactory($this->container);
 
         $this->manager = new DatabaseManager($this->container, $factory);
+    }
+
+    /**
+     *
+     */
+    public function release(): void
+    {
+        $this->getDatabaseManager()->release();
     }
 }
