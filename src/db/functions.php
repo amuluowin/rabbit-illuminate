@@ -7,7 +7,7 @@
  */
 
 if (!function_exists('dbRelease')) {
-    function dbRelease(\Illuminate\Support\Collection $collection = null): \Illuminate\Support\Collection
+    function DbRelease(\Illuminate\Support\Collection $collection = null): ?\Illuminate\Support\Collection
     {
         /** @var Manager $db */
         $db = \rabbit\core\ObjectFactory::get('db');

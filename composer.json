@@ -19,7 +19,7 @@
       "rabbit\\illuminate\\": "src/"
     },
     "files": [
-      "src/functions.php"
+      "src/db/functions.php"
     ]
   }
 }
