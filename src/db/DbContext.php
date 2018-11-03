@@ -9,7 +9,7 @@
 namespace rabbit\illuminate\db;
 
 
-use Illuminate\Database\Connection;
+use rabbit\core\ContextTrait;
 use rabbit\helper\CoroHelper;
 
 /**
@@ -18,56 +18,11 @@ use rabbit\helper\CoroHelper;
  */
 class DbContext
 {
+    use ContextTrait;
     /**
      * @var array
      */
     private static $context = [];
-
-    /**
-     * @return array|null
-     */
-    public static function getAll(): ?array
-    {
-        return self::$context[CoroHelper::getId()];
-    }
-
-    /**
-     * @param array $config
-     */
-    public static function setAll($config = []): void
-    {
-        foreach ($config as $name => $value) {
-            self::set($name, $value);
-        }
-    }
-
-    /**
-     * @param string $name
-     * @return null
-     */
-    public static function get(string $name): Connection
-    {
-        $id = CoroHelper::getId();
-        return self::$context[$id][$name];
-    }
-
-    /**
-     * @param string $name
-     * @param $value
-     */
-    public static function set(string $name, Connection $value): void
-    {
-        self::$context[CoroHelper::getId()][$name] = $value;
-    }
-
-    /**
-     * @param string $name
-     * @return bool
-     */
-    public static function has(string $name): bool
-    {
-        return isset(self::$context[CoroHelper::getId()][$name]);
-    }
 
     /**
      *
