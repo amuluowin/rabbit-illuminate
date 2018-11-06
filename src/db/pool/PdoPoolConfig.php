@@ -24,4 +24,12 @@ class PdoPoolConfig extends PoolProperties
     {
         $this->uri = $config;
     }
+
+    /**
+     * @param string $name
+     */
+    public function setName(string $name)
+    {
+        $this->name = $name;
+    }
 }

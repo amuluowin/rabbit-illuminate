@@ -38,12 +38,8 @@ class ConnectionFactory extends \Illuminate\Database\Connectors\ConnectionFactor
             return $resolver($connection, $database, $prefix, $config);
         }
 
-        if (!isset($this->pool[$database])) {
-            $this->pool[$database] = $config['pool'];
-            unset($config['pool']);
-            $this->pool[$database]->getPoolConfig()->setUri([$driver, $connection, $database, $prefix, $config]);
-        }
-
-        return $this->pool[$database]->getConnection();
+        $config['pool']->getPoolConfig()->setUri([$driver, $connection, $database, $prefix, $config]);
+        $config['pool']->getPoolConfig()->setName($config['name']);
+        return $config['pool']->getConnection();
     }
 }
