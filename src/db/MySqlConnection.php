@@ -43,7 +43,8 @@ class MySqlConnection extends \Illuminate\Database\MySqlConnection implements Co
     public function reconnect(): void
     {
         if (is_callable($this->reconnector)) {
-            $this->pdo = call_user_func($this->reconnector, $this);
+            call_user_func($this->reconnector, $this);
+            return;
         }
 
         throw new \LogicException('Lost connection and no reconnector available.');
