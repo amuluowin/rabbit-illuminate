@@ -72,7 +72,7 @@ class SQLiteConnection extends \Illuminate\Database\SQLiteConnection implements 
      * @return mixed|void
      * @throws NotSupportedException
      */
-    public function receive(float $timeout = null)
+    public function receive(float $timeout = -1)
     {
         throw new NotSupportedException('can not call ' . __METHOD__);
     }

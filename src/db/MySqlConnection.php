@@ -72,7 +72,7 @@ class MySqlConnection extends \Illuminate\Database\MySqlConnection implements Co
      * @return mixed|void
      * @throws NotSupportedException
      */
-    public function receive(float $timeout = null)
+    public function receive(float $timeout = -1)
     {
         throw new NotSupportedException('can not call ' . __METHOD__);
     }
