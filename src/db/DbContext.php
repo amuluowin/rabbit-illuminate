@@ -29,9 +29,11 @@ class DbContext
      */
     public static function release(): void
     {
-        foreach (self::$context[CoroHelper::getId()] as $name => $connection) {
-            $connection->release();
+        if (self::$context !== [] && isset(self::$context[CoroHelper::getId()])) {
+            foreach (self::$context[CoroHelper::getId()] as $name => $connection) {
+                $connection->release();
+            }
+            unset(self::$context[CoroHelper::getId()]);
         }
-        unset(self::$context[CoroHelper::getId()]);
     }
 }
