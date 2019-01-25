@@ -10,12 +10,13 @@ namespace rabbit\illuminate\db;
 
 use Illuminate\Container\Container;
 use Illuminate\Support\Facades\DB;
+use rabbit\contract\ReleaseInterface;
 
 /**
  * Class Manager
  * @package rabbit\illuminate\db
  */
-class Manager extends \Illuminate\Database\Capsule\Manager
+class Manager extends \Illuminate\Database\Capsule\Manager implements ReleaseInterface
 {
     /**
      * Create a new database capsule manager.
