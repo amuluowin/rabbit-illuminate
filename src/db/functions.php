@@ -10,7 +10,7 @@ if (!function_exists('DbRelease')) {
     function DbRelease()
     {
         /** @var Manager $db */
-        $db = \rabbit\core\ObjectFactory::get('db');
+        $db = getDI('db');
         $db->release();
     }
 }
