@@ -18,19 +18,16 @@ use rabbit\core\ContextTrait;
  */
 class DbContext extends Context
 {
-    protected static $key = 'database';
+    use ContextTrait;
 
     /**
      *
      */
-    public static function release(): void
+    public function releaseContext(): void
     {
-        $context = \Co::getContext();
-        if (isset($context[self::$key])) {
-            foreach ($context[self::$key] as $name => $connection) {
-                $connection->release();
-            }
-            unset($context[self::$key]);
+        foreach ($this->context as $name => $connection) {
+            $connection->release();
+            unset($this->context[$name]);
         }
     }
 }
