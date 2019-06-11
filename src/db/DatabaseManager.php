@@ -8,12 +8,16 @@
 
 namespace rabbit\illuminate\db;
 
+use rabbit\helper\CoroHelper;
+
 /**
  * Class DatabaseManager
  * @package rabbit\illuminate\db
  */
 class DatabaseManager extends \Illuminate\Database\DatabaseManager
 {
+    /** @var array */
+    private $deferList = [];
     /**
      * Get a database connection instance.
      *
@@ -33,6 +37,13 @@ class DatabaseManager extends \Illuminate\Database\DatabaseManager
             DbContext::set($name, $this->configure(
                 $this->makeConnection($database), $type
             ));
+            if (($cid = CoroHelper::getId()) !== -1 && !array_key_exists($cid, $this->deferList)) {
+                defer(function () use ($cid) {
+                    DbContext::release();
+                    unset($this->deferList[$cid]);
+                });
+                $this->deferList[$cid] = true;
+            }
         }
 
         return DbContext::get($name);
