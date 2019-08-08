@@ -40,9 +40,9 @@ class DatabaseManager extends \Illuminate\Database\DatabaseManager
             if (($cid = CoroHelper::getId()) !== -1 && !array_key_exists($cid, $this->deferList)) {
                 defer(function () use ($cid) {
                     DbContext::release();
-                    unset($this->deferList[$cid]);
+                    $this->deferList = array_values(array_diff($this->deferList, [$cid]));
                 });
-                $this->deferList[$cid] = true;
+                $this->deferList[] = $cid;
             }
         }
 
